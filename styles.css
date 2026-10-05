@@ -1,0 +1,358 @@
+/* ===== Tokens ===== */
+:root {
+  /* UNC primary + secondary brand colors (identity.unc.edu/brand/color) */
+  --ink: #13294B;        /* UNC Navy */
+  --ink-soft: #5B6670;   /* Old Well Basin — 5.3:1 on --paper */
+  --paper: #EDF5FB;      /* Cloud */
+  --paper-raised: #FFFFFF;
+  --line: #A2AAAD;       /* Flat Gray */
+  --line-soft: #ECEDED;  /* Franklin Fog */
+
+  --carolina: #4B9CD3;   /* Carolina Blue — as a text/graphic color needs 3:1 min; as a fill, pair with --ink text (4.85:1) and a --ink border (fill alone is only ~2.7:1 against --paper) */
+  --accent: #006A94;     /* darkened from UNC "Hyperlink Blue" #007FAE (brand swatch is only 4.1:1 on --paper); 5.5:1 on --paper */
+
+  /* Tier colors: official UNC accent hues, darkened only as far as needed for
+     4.5:1 text contrast on --paper/white. Used for text, borders, solid fills w/ white text. */
+  --low: #006D6A;        /* Piedmont Pine (brand-exact, already AA) */
+  --low-bg: #DCEEE9;
+  --moderate: #8A5A12;   /* darkened from Tulip Poplar #FF9E1B (brand swatch fails AA as text) */
+  --moderate-bg: #FBE8C9;
+  --high: #B23430;       /* darkened from Clay #E95550 (brand swatch fails AA as text) */
+  --high-bg: #FBDFDB;
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --maxw: 1040px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; color: var(--ink); margin: 0; }
+
+a { color: var(--accent); }
+a:hover { color: var(--ink); }
+
+.skip-link {
+  position: absolute; left: -999px; top: 0;
+  background: var(--ink); color: #fff; padding: 0.75rem 1rem; z-index: 200;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--ink);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.topbar-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 1.5rem;
+  gap: 1rem;
+}
+.topbar-mark {
+  font-family: var(--mono); font-weight: 600; font-size: 0.85rem;
+  color: var(--carolina); letter-spacing: 0.02em;
+}
+.topbar-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.topbar-nav a {
+  color: #B7D7ED; text-decoration: none; font-size: 0.9rem; /* Fordham Fountain — 9.6:1 on navy */
+}
+.topbar-nav a:hover { color: #fff; }
+
+/* ===== Hero ===== */
+.hero { padding: 4rem 1.5rem 3rem; }
+.hero-inner { max-width: var(--maxw); margin: 0 auto; }
+.hero-kicker {
+  font-family: var(--mono); font-size: 0.8rem; color: var(--ink-soft);
+  margin: 0 0 1rem; text-transform: none;
+}
+.hero-title {
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  line-height: 1.15;
+  max-width: 34ch;
+  margin-bottom: 1.1rem;
+}
+.hero-sub {
+  max-width: 62ch;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+.hero-sub strong { color: var(--moderate); font-weight: 600; }
+
+/* ----- Tier ladder (hero centerpiece) ----- */
+.ladder-track {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.rung {
+  background: var(--paper-raised);
+  border: none;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 0.35rem;
+  font-family: var(--sans);
+  transition: transform 0.15s ease, background 0.15s ease;
+  position: relative;
+}
+.rung:hover { background: #fff; }
+.rung:nth-child(2) { transform: translateY(-10px); padding-top: 1.9rem; }
+.rung:nth-child(2):hover { transform: translateY(-10px); }
+.rung[aria-current="true"] {
+  background: #fff;
+  box-shadow: inset 0 3px 0 var(--accent);
+}
+.rung-step { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft); }
+.rung-label { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; }
+.rung-who { font-size: 0.88rem; color: var(--ink-soft); }
+.rung-low .rung-label { color: var(--low); }
+.rung-moderate .rung-label { color: var(--moderate); }
+.rung-high .rung-label { color: var(--high); }
+.ladder-hint { margin: 0.9rem 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ===== Band (scope / finder strips) ===== */
+.band { padding: 3rem 1.5rem; border-top: 1px solid var(--line); }
+.band-inner { max-width: var(--maxw); margin: 0 auto; }
+.band-h { font-size: 1.3rem; margin-bottom: 1rem; }
+.band-ink { background: var(--ink); color: #E7E9EF; }
+.band-h-invert { color: #fff; }
+.band-p-invert { color: #B7D7ED; max-width: 60ch; margin: 0 0 2rem; } /* Fordham Fountain */
+
+.scope-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+}
+@media (max-width: 760px) { .scope-grid { grid-template-columns: 1fr; } }
+
+.plain-list { margin: 0; padding-left: 1.1rem; }
+.plain-list li { margin-bottom: 0.45rem; }
+.scope-note { color: var(--ink-soft); font-size: 0.92rem; margin-top: 1rem; }
+
+.role-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.role-tab {
+  font-family: var(--sans); font-size: 0.88rem;
+  background: none; border: 1px solid var(--line); color: var(--ink);
+  padding: 0.4rem 0.8rem; cursor: pointer;
+}
+.role-tab[aria-selected="true"] {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+.role-desc { color: var(--ink-soft); max-width: 55ch; }
+
+/* ===== Finder ===== */
+.finder-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 860px) { .finder-grid { grid-template-columns: 1fr; } }
+.finder-q label { display: block; font-size: 0.88rem; color: #B7D7ED; margin-bottom: 0.5rem; }
+.finder-q select {
+  width: 100%; padding: 0.6rem 0.7rem;
+  font-family: var(--sans); font-size: 0.95rem;
+  background: #1B2B47; color: #fff; border: 1px solid #2C5080;
+}
+.finder-result {
+  border-top: 1px solid #2C5080; padding-top: 1.5rem;
+  font-size: 1.05rem;
+}
+.finder-result .result-badge {
+  display: inline-block; font-family: var(--mono); font-weight: 600;
+  padding: 0.15rem 0.6rem; margin-right: 0.5rem;
+}
+.finder-result .result-level-low .result-badge { background: var(--low-bg); color: var(--low); }
+.finder-result .result-level-moderate .result-badge { background: var(--moderate-bg); color: var(--moderate); }
+.finder-result .result-level-high .result-badge { background: var(--high-bg); color: var(--high); }
+.finder-result a.btn { color: #fff; }
+.finder-result-notes { color: #B7D7ED; font-size: 0.9rem; margin-top: 0.5rem; }
+
+/* ===== Section (controls / overlays / exceptions) ===== */
+.section { padding: 3.5rem 1.5rem; }
+.section-tint { background: var(--paper-raised); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.section-inner { max-width: var(--maxw); margin: 0 auto; }
+.section-h { font-size: 1.6rem; margin-bottom: 0.75rem; }
+.section-p { max-width: 70ch; color: var(--ink-soft); margin: 0 0 2rem; }
+.legend-a, .legend-s {
+  font-family: var(--mono); font-weight: 600; padding: 0.1rem 0.4rem;
+  border: 1px solid transparent;
+}
+.legend-a { color: #fff; background: var(--ink); }
+.legend-s { color: var(--ink); background: var(--carolina); border-color: var(--ink); }
+
+/* ----- toolbar ----- */
+.controls-toolbar { margin-bottom: 1.75rem; }
+.toolbar-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; }
+#search {
+  width: 100%; max-width: 480px;
+  padding: 0.65rem 0.9rem;
+  font-family: var(--sans); font-size: 0.95rem;
+  border: 1px solid var(--line); background: #fff;
+}
+.toolbar-label { font-size: 0.85rem; color: var(--ink-soft); }
+.chip-group { display: flex; gap: 0.4rem; }
+.chip {
+  font-family: var(--sans); font-size: 0.85rem;
+  border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  padding: 0.3rem 0.75rem; cursor: pointer;
+}
+.chip[aria-pressed="true"] { color: #fff; border-color: transparent; }
+.chip.chip-low[aria-pressed="true"] { background: var(--low); }
+.chip.chip-moderate[aria-pressed="true"] { background: var(--moderate); }
+.chip.chip-high[aria-pressed="true"] { background: var(--high); }
+.toggle { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--ink-soft); }
+.toolbar-spacer { flex: 1; }
+.link-btn {
+  background: none; border: none; font-family: var(--sans); font-size: 0.85rem;
+  color: var(--accent); cursor: pointer; padding: 0;
+}
+.link-btn:hover { color: var(--ink); text-decoration: underline; }
+
+/* ----- category ledger ----- */
+.category {
+  border-top: 1px solid var(--line);
+}
+.category:last-child { border-bottom: 1px solid var(--line); }
+.category-head {
+  width: 100%; display: flex; align-items: baseline; gap: 0.9rem;
+  background: none; border: none; text-align: left; cursor: pointer;
+  padding: 1rem 0;
+  font-family: var(--sans); color: var(--ink);
+}
+.category-numeral {
+  font-family: var(--mono); font-size: 0.85rem; color: var(--accent);
+  min-width: 2.2rem;
+}
+.category-title { font-family: var(--serif); font-size: 1.15rem; flex: 1; }
+.category-count { font-size: 0.82rem; color: var(--ink-soft); }
+.category-caret { font-size: 0.8rem; color: var(--ink-soft); transition: transform 0.15s ease; }
+.category[data-open="true"] .category-caret { transform: rotate(90deg); }
+
+.category-body { padding: 0 0 1.5rem; }
+.category-intro { color: var(--ink-soft); font-size: 0.92rem; max-width: 70ch; margin: 0 0 0.25rem; }
+.category-note { color: var(--ink-soft); font-size: 0.85rem; font-style: italic; margin: 0 0 1rem; }
+
+.control-table { width: 100%; border-collapse: collapse; }
+.control-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--line-soft);
+  cursor: pointer;
+}
+.control-row:hover { background: #fff; }
+.control-main { min-width: 0; }
+.control-name { font-weight: 600; font-size: 0.95rem; }
+.control-desc { color: var(--ink-soft); font-size: 0.88rem; margin-top: 0.15rem; }
+.control-badges { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+
+.badge {
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 600;
+  padding: 0.15rem 0.5rem; white-space: nowrap;
+  border: 1px solid transparent;
+}
+/* Badge color = scope (All vs ITS), matching the legend key — not the Low/Moderate/High column. */
+.badge-all { color: #fff; background: var(--ink); border-color: var(--ink); }
+.badge-its { color: var(--ink); background: var(--carolina); border-color: var(--ink); }
+.badge-pending { color: var(--accent); border-color: var(--accent); }
+.badge-na { color: var(--ink-soft); border-color: var(--line); }
+.badge[data-pending="true"] { border-style: dashed; }
+.badge-tag { font-size: 0.72rem; color: var(--ink-soft); margin-right: 0.15rem; }
+.badge-all .badge-tag { color: rgba(255,255,255,0.8); }
+.badge-its .badge-tag { color: rgba(19,41,75,0.75); }
+
+.control-row-nolevel .control-badges::after {
+  content: "Applies at every level";
+  font-size: 0.78rem; color: var(--ink-soft); font-style: italic;
+}
+
+.no-results { color: var(--ink-soft); padding: 1rem 0; }
+
+/* ===== Overlays grid ===== */
+.overlay-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+}
+.overlay-box {
+  background: var(--paper-raised); border: none; text-align: left; cursor: pointer;
+  padding: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;
+  font-family: var(--sans);
+}
+.overlay-box:hover { background: #fff; }
+.overlay-title { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); }
+.overlay-summary { font-size: 0.85rem; color: var(--ink-soft); }
+
+/* ===== Simple table (exceptions) ===== */
+.simple-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.simple-table th, .simple-table td {
+  text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--line);
+  font-size: 0.9rem; vertical-align: top;
+}
+.simple-table th { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); font-weight: 600; }
+
+/* ===== Timeline ===== */
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li {
+  display: grid; grid-template-columns: 11rem 1fr;
+  gap: 1.5rem; padding: 1rem 0; border-top: 1px solid var(--line);
+}
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline-date { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); }
+@media (max-width: 600px) { .timeline li { grid-template-columns: 1fr; gap: 0.25rem; } }
+
+/* ===== Footer ===== */
+.footer { background: var(--ink); color: #B7D7ED; padding: 1.5rem; }
+.footer-inner { max-width: var(--maxw); margin: 0 auto; }
+.footer-source { font-size: 0.82rem; color: #B7D7ED; max-width: 70ch; } /* Fordham Fountain — 9.6:1 on navy */
+.footer-source a { color: #8FC3E8; } /* lightened Carolina Blue — 7:1+ on navy */
+
+/* ===== Modal ===== */
+.modal { border: none; padding: 0; max-width: 620px; width: 92vw; background: #fff; }
+.modal::backdrop { background: rgba(18,33,59,0.55); }
+.modal-inner { padding: 2rem; position: relative; }
+.modal-close {
+  position: absolute; top: 0.9rem; right: 1rem;
+  background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--ink-soft);
+  line-height: 1;
+}
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 0.4rem; }
+.modal-title { font-size: 1.4rem; margin-bottom: 0.75rem; }
+.modal-desc { color: var(--ink-soft); margin-bottom: 1.25rem; }
+.modal-levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.modal-level { background: var(--paper-raised); padding: 0.9rem; }
+.modal-level-name { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 0.3rem; }
+.modal-level-value { font-weight: 600; }
+.modal-value-all { color: var(--ink); }
+.modal-value-its { color: var(--ink-soft); }
+.modal-value-pending { color: var(--accent); }
+.modal-value-na { color: var(--ink-soft); }
+.modal-list { margin: 0; padding-left: 1.1rem; }
+.modal-list li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+
+@media (max-width: 600px) {
+  .control-row { grid-template-columns: 1fr; }
+  .control-badges { justify-content: flex-start; }
+  .modal-levels { grid-template-columns: 1fr; }
+}

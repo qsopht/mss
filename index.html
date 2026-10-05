@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business School Technology Security Guide — Minimum Security Standard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-mark">MSS Navigator</span>
+    <nav class="topbar-nav" aria-label="Section navigation">
+      <a href="#levels">Levels</a>
+      <a href="#roles">Roles</a>
+      <a href="#finder">Find your level</a>
+      <a href="#controls">Controls</a>
+      <a href="#overlays">Special cases</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-kicker">For UNC Kenan-Flagler Business School staff and faculty</p>
+      <h1 class="hero-title">Minimum Security Standard Guide</h1>
+      <p class="">A working guide to the University's Minimum Security Standard (MSS) — built so you can tell, in plain language, what a given piece of software, system, or location needs to meet at the <strong>Moderate</strong> baseline most of our work falls under.</p>
+
+      <div class="ladder" id="levels" role="group" aria-label="Baseline protection levels">
+        <div class="ladder-track">
+          <button class="rung rung-low" data-level="low">
+            <span class="rung-step">Step 1</span>
+            <span class="rung-label">Low</span>
+            <span class="rung-who">Public, low-risk information</span>
+          </button>
+          <button class="rung rung-moderate" data-level="moderate" aria-current="true">
+            <span class="rung-step">Step 2 — our focus</span>
+            <span class="rung-label">Moderate</span>
+            <span class="rung-who">Tier 2 confidential data</span>
+          </button>
+          <button class="rung rung-high" data-level="high">
+            <span class="rung-step">Step 3</span>
+            <span class="rung-label">High</span>
+            <span class="rung-who">Tier 3 need-to-know data</span>
+          </button>
+        </div>
+        <p class="ladder-hint">Click a step for what it means and an example — or jump straight to its <a href="#controls">required controls</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCOPE STRIP ============ -->
+  <section class="band">
+    <div class="band-inner scope-grid">
+      <div class="scope-col">
+        <h2 class="band-h">What counts as “University IT”</h2>
+        <ul class="plain-list" id="scope-list"></ul>
+        <p class="scope-note" id="scope-note"></p>
+      </div>
+      <div class="scope-col">
+        <h2 class="band-h">Your role, your obligations</h2>
+        <div class="role-tabs" id="role-tabs" role="tablist" aria-label="Your role"></div>
+        <p class="role-desc" id="role-desc"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINDER ============ -->
+  <section class="band band-ink" id="finder">
+    <div class="band-inner">
+      <h2 class="band-h band-h-invert">Find your baseline in three questions</h2>
+      <p class="band-p-invert">This mirrors the exact questions the Standard says a Responsible Person must answer before selecting, buying, or building any system.</p>
+
+      <div class="finder-grid">
+        <div class="finder-q">
+          <label for="q-data">1. What's the most sensitive data involved?</label>
+          <select id="q-data">
+            <option value="low">Public or low-risk information only</option>
+            <option value="moderate" selected>Confidential to the organization (Tier 2) — e.g. student records, grades, internal financials</option>
+            <option value="high">Need-to-know / Tier 3 — e.g. PHI, SSNs, payment card data</option>
+            <option value="unsure">Not sure</option>
+          </select>
+        </div>
+        <div class="finder-q">
+          <label for="q-external">2. Do any external obligations apply?</label>
+          <select id="q-external">
+            <option value="none" selected>None that I know of</option>
+            <option value="ferpa">FERPA (student records)</option>
+            <option value="hipaa">HIPAA (health information)</option>
+            <option value="pci">PCI-DSS (payment cards)</option>
+            <option value="cjis">CJIS</option>
+            <option value="dod">DoD contract</option>
+            <option value="other">Other / not sure</option>
+          </select>
+        </div>
+        <div class="finder-q">
+          <label for="q-critical">3. How mission-critical is it to your unit?</label>
+          <select id="q-critical">
+            <option value="no" selected>Not critical — things keep running fine without it</option>
+            <option value="some">Somewhat — a real disruption, but survivable</option>
+            <option value="yes">Highly critical — the unit depends on it running</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="finder-result" id="finder-result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============ ROLES (data target, rendered into band above) ============ -->
+
+  <!-- ============ CONTROLS EXPLORER ============ -->
+  <section class="section" id="controls">
+    <div class="section-inner">
+      <h2 class="section-h">Controls, by category</h2>
+      <p class="section-p">The Standard groups every control into 18 categories (I–XVIII). Each row below shows what's required at Low, Moderate, and High. <span class="legend-a">All</span> = applies to all systems at that level. <span class="legend-s">ITS</span> = applies only to shared IT services. An em dash means not required at that level.</p>
+
+      <div class="controls-toolbar">
+        <div class="toolbar-row">
+          <input type="search" id="search" placeholder="Search controls — e.g. “encryption,” “backups,” “MFA”" aria-label="Search controls">
+        </div>
+        <div class="toolbar-row toolbar-row-chips">
+          <span class="toolbar-label">Show level:</span>
+          <div class="chip-group" id="level-chips" role="group" aria-label="Filter by protection level"></div>
+          <label class="toggle">
+            <input type="checkbox" id="hide-na" checked>
+            Hide rows not required at the selected level(s)
+          </label>
+          <div class="toolbar-spacer"></div>
+          <button class="link-btn" id="expand-all">Expand all</button>
+          <button class="link-btn" id="collapse-all">Collapse all</button>
+        </div>
+      </div>
+
+      <div id="category-list" class="category-list"></div>
+      <p class="no-results" id="no-results" hidden>No controls match that search.</p>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <section class="section section-tint" id="overlays">
+    <div class="section-inner">
+      <h2 class="section-h">Special cases (overlays)</h2>
+      <p class="section-p">Some data and relationships carry obligations beyond the baseline. When one applies, its controls stack on top of your baseline level — they don't replace it.</p>
+      <div class="overlay-grid" id="overlay-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ EXCEPTIONS ============ -->
+  <section class="section" id="exceptions">
+    <div class="section-inner">
+      <h2 class="section-h">When a control can't be met</h2>
+      <p class="section-p" id="exceptions-intro"></p>
+      <table class="simple-table" id="exceptions-table">
+        <thead><tr><th>Protection obligation</th><th>Approvals required</th><th>Documentation required</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <ul class="plain-list" id="exceptions-notes"></ul>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="section section-tint">
+    <div class="section-inner">
+      <h2 class="section-h">Key dates</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER / RESOURCES ============ -->
+<footer class="footer" id="resources">
+  <div class="footer-inner">
+    <p class="footer-source">Condensed for quick reference from the <a id="source-link" href="#" target="_blank" rel="noopener">UNC-Chapel Hill Information Security Controls Standard</a>. When this guide and the official Standard disagree, the Standard governs — check with your Information Security Liaison.</p>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<dialog id="modal" class="modal">
+  <div class="modal-inner">
+    <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    <div id="modal-body"></div>
+  </div>
+</dialog>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
